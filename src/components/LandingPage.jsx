@@ -9,7 +9,7 @@ export default function LandingPage() {
     const align = {
         textAlign: 'center'
     }
-    const variant = "Dark";
+    const variant = "Light";
     return (
         <div className='landingPage'>
             <div>
