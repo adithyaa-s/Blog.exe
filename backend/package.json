@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adithyaa-s/Blog.exe.git"
+  },
+  "author": "adithyaa-s",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adithyaa-s/Blog.exe/issues"
+  },
+  "homepage": "https://github.com/adithyaa-s/Blog.exe#readme",
+  "description": ""
+}

@@ -3,7 +3,7 @@ import Navbar from "./Navbar"
 import Sidebar from "./Sidebar";
 import CDSpin from "./CDSpin";
 import { useState } from "react"
-import './ProfilePage.css';
+// import './ProfilePage.css';
 
 export default function ProfilePage(){
     console.log("Profile")

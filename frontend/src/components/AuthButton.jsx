@@ -21,13 +21,16 @@ function AuthButton({buttonValue}) {
   const handleClick = () => setLoading(true);
 
   return (
+    <div className='d-flex justify-content-center'>
     <Button
       variant="primary"
       disabled={isLoading}
       onClick={!isLoading ? handleClick : null}
+      // style={{position:"absolute", top:"50%", left:"50%"}}
     >
       {isLoading ? 'Loading…' : buttonValue}
     </Button>
+    </div>
   );
 }
 
