@@ -15,5 +15,13 @@
     "url": "https://github.com/adithyaa-s/Blog.exe/issues"
   },
   "homepage": "https://github.com/adithyaa-s/Blog.exe#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.8.2"
+  }
 }
