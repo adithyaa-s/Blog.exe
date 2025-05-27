@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  username  String    @unique
+  email     String    @unique
+  password  String
+  posts     Post[]
+  comments  Comment[]
+  likes     Like[]
+  following Follows[] @relation("following")
+  followers Follows[] @relation("followers")
+}
+
+model Post {
+  id       String    @id @default(uuid())
+  heading  String
+  content  String
+  authorId String
+  author   User      @relation(fields: [authorId], references: [id])
+  imageUrl String
+  likes    Like[]
+  comments Comment[]
+}
+
+model Comment {
+  id      String @id @default(uuid())
+  content String
+  postId  String
+  userId  String
+  Post    Post   @relation(fields: [postId], references: [id])
+  User    User   @relation(fields: [userId], references: [id])
+}
+
+model Like {
+  id     String @id @default(uuid())
+  postId String
+  userId String
+  post   Post   @relation(fields: [postId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId])
+}
+
+model Follows {
+  id          String @id @default(uuid())
+  followerId  String
+  followingId String
+  follower    User   @relation("followers", fields: [followerId], references: [id])
+  following   User   @relation("following", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
