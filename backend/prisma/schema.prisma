@@ -32,7 +32,7 @@ model Post {
   heading  String
   content  String
   authorId String
-  author   User      @relation(fields: [authorId], references: [id])
+  author   User      @relation(fields: [authorId], references: [username])
   imageUrl String
   likes    Like[]
   comments Comment[]
