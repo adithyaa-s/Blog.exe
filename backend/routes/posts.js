@@ -13,7 +13,6 @@ router.use((req, res, next) => {
 
 router.post('/createPost', upload.single('image'), async (req, res) => {
     try {
-        // console.log(upload.resource_type)
         console.log(req.body.username)
       const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
@@ -43,5 +42,46 @@ router.post('/createPost', upload.single('image'), async (req, res) => {
     }
   });
 
+  router.get("/posts", async (req,res) =>{
+    try{
+        const posts = await prisma.post.findMany({
+            include:{
+                author: { select:{ username: true, name:true}},
+                comments: true,
+                likes: true
+            },
+            orderBy: {id:'desc'}
+        })
+        return res.json(posts);
+    }catch(err){
+        return res.status(500).json({"Message":err.message})
+    }
+  })
+
+  router.post("/posts/:postId/like", async(req, res) => {
+    try{
+        const {userId} = req.body;
+        const {postId} = req.params;
+        await prisma.like.create({
+            data:{ postId, userId}
+        });
+        return res.sendStatus(200);
+    }catch(err){
+        return res.status(400).json({error : err.message})
+    }
+  });
+
+  router.post("/posts/:postId/comment", async(req, res) =>{
+    const {userId, content} = req.body;
+    const {postId} = req.params;
+    try{
+        const comment = await prisma.comment.create({
+            data:{ postId, userId, content}
+        });
+        return res.status(200);
+    }catch(err){
+        return res.status(500).json({error: err.message});
+    }
+  })
 
 export const PostRouter = router;
