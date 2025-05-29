@@ -3,6 +3,12 @@ import prisma from "../utils/prismaClient.js"
 
 const router = express.Router();
 
+router.use((req, res, next) => {
+    console.log(`Request received: ${req.method} ${req.url}`);
+    next();
+  });
+  
+
 router.get("/:id", async (req,res) =>{
     try{
         const username = req.params.id;
