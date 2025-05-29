@@ -13,13 +13,12 @@ export default function ProfilePage(){
     
     return (
         <div>
-            <Navbar handleOpen={handleOpen} />
             <Sidebar show={showSidebar} handleClose={handleClose} />
 
             <Container className="mt-5">
                 <Row className="align-items-center">
                     {/* Profile Section */}
-                    <Col lg={8} className="d-flex align-items-center">
+                    <Col lg={8} md={4} className="d-flex align-items-center">
                         <div className="profile-image-container">
                             <img 
                                 src="/profilepic.png" 
@@ -35,8 +34,7 @@ export default function ProfilePage(){
                         </div>
                     </Col>
                     
-                    {/* CD Spin Section */}
-                    <Col lg={4} className="d-flex flex-column align-items-center">
+                    <Col lg={4} md={4} className="d-flex flex-column align-items-center">
                         <CDSpin />
                         <div className="playing-now mt-3">
                             <p className="playing-text">Playing Now</p>

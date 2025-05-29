@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
-function AuthButton({buttonValue}) {
+function AuthButton({buttonValue,handleSubmit}) {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function AuthButton({buttonValue}) {
     }
   }, [isLoading]);
 
-  const handleClick = () => setLoading(true);
+  const handleClick = () =>{ buttonValue = "Login" ? handleSubmit("signin") : handleSubmit("signup"); setLoading(true);}
 
   return (
     <div className='d-flex justify-content-center'>

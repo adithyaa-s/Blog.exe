@@ -11,7 +11,7 @@ export default function FeedPage() {
 
     return (
         <div>
-            <Navbar handleOpen={handleOpen}/>
+            {/* <Navbar handleOpen={handleOpen}/> */}
             {/* Bottom Section of Feed */}
             <Sidebar show={showSidebar} handleClose={handleClose}/>
             <Container style={{width:"100%"}} className="mt-4">
