@@ -32,7 +32,7 @@ model Post {
   heading  String
   content  String
   authorId String
-  author   User      @relation(fields: [authorId], references: [id])
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   imageUrl String
   likes    Like[]
   comments Comment[]
@@ -43,16 +43,16 @@ model Comment {
   content String
   postId  String
   userId  String
-  Post    Post   @relation(fields: [postId], references: [id])
-  User    User   @relation(fields: [userId], references: [id])
+  Post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  User    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Like {
   id     String @id @default(uuid())
   postId String
   userId String
-  post   Post   @relation(fields: [postId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([postId, userId])
 }
@@ -61,8 +61,8 @@ model Follows {
   id          String @id @default(uuid())
   followerId  String
   followingId String
-  follower    User   @relation("followers", fields: [followerId], references: [id])
-  following   User   @relation("following", fields: [followingId], references: [id])
+  follower    User   @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@unique([followerId, followingId])
 }
