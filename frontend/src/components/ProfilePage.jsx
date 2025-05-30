@@ -6,7 +6,6 @@ import { useState } from "react"
 // import './ProfilePage.css';
 
 export default function ProfilePage(){
-    console.log("Profile")
     const [showSidebar, setShowSidebar] = useState(false);
     const handleOpen = () => {setShowSidebar(true)}
     const handleClose = () => {setShowSidebar(false)}

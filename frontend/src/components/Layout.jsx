@@ -21,7 +21,6 @@ export default function Layout() {
             <Sidebar show={showSidebar} handleClose={handleClose} />
             </>
         )}
-      {/* {!isHomePage && <Navbar handleOpen={handleOpen} /> && <Sidebar show={showSidebar} handleClose={handleClose}/>} */}
       <Outlet />
     </>
   );

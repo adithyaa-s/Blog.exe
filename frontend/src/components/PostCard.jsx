@@ -1,36 +1,50 @@
-import { Card, Button} from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { useState } from "react";
 
-export default function PostCard() {
+export default function PostCard({
+  heading,
+  username,
+  content,
+  imageUrl,
+  likes,
+}) {
   const [like, setLike] = useState(false);
-  const [likeCount, setLikeCount] = useState(12);
+  const [likeCount, setLikeCount] = useState(parseInt(likes));
   const handleLike = () => {
-    if(!like){
-        setLike(true);
-        setLikeCount(likeCount + 1);
-    }else{
-        setLike(false);
-        setLikeCount(likeCount-1);
+    if (!like) {
+      setLike(true);
+      setLikeCount((prev) => prev + 1);
+    } else {
+      setLike(false);
+      setLikeCount((prev) => prev - 1);
     }
   };
   return (
     <Card className="mb-4 shadow-sm">
       <Card.Header>
-      <div className="d-flex align-items-center justify-content-between">
-        <h5 className="mb-0"> Coding Ninja</h5>
-        <span className="text-muted">@user</span>
-      </div>
+        <div className="d-flex align-items-center justify-content-between">
+          <h5 className="mb-0">{heading}</h5>
+          <span className="text-muted">@{username}</span>
+        </div>
       </Card.Header>
-      <video
-        className="w-100"
-        controls
-        src="postvid.mp4"
-        style={{ maxHeight: "400px", objectFit: "cover" }}
-      />
+      {imageUrl?.match(/\.(mp4|webm|ogg)$/i) ? (
+        <video
+          className="w-100"
+          controls
+          src={imageUrl}
+          style={{ maxHeight: "400px", objectFit: "cover" }}
+        />
+      ) : (
+        <img
+          src={imageUrl}
+          alt="Post media"
+          className="w-100"
+          style={{ maxHeight: "400px", objectFit: "cover" }}
+        />
+      )}
+
       <Card.Body>
-        <Card.Text>
-          Learning to code like a ninja is all about focus and discipline.
-        </Card.Text>
+        <Card.Text>{content}</Card.Text>
         <div className="d-flex justify-content-between">
           {" "}
           <Button

@@ -1,5 +1,4 @@
 export default function Navbar({handleOpen}) {
-    console.log("Navbar")
     return (
         <div>
             <div className="container-fluid py-3 border">

@@ -38,7 +38,6 @@ export default function AuthForms() {
         formData
         // {withCredentials: true, headers: { "Content-Type": "application/json" }}
       );
-      console.log(response)
       if (response.status == 200) {
         const token = response.data.token;
         localStorage.setItem("token", token)
@@ -51,10 +50,10 @@ export default function AuthForms() {
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         setToastObject({ header: "Error", content: "Invalid Credentials" });
-        console.log(toastObject);
+        
       } else if (axios.isAxiosError(error) && error.response?.status === 404) {
         setToastObject({ header: "Error", content: "User Not Found" });
-        console.log(toastObject);
+       
       } else {
         console.log(error);
       }
@@ -128,7 +127,6 @@ export default function AuthForms() {
             type="button"
             className="switcher switcher-signup"
             onClick={() => {
-              console.log("clicked");
               setActiveForm("signup");
             }}
           >
