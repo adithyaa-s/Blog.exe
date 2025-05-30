@@ -29,7 +29,6 @@ router.post("/createPost", authenticateToken, upload.single("image"), async (req
         );
         stream.end(req.file.buffer);
       });
-      console.log(req.user)
       const post = await tx.post.create({
         data: {
           heading,
@@ -78,7 +77,6 @@ router.post("/:postId/comment",authenticateToken, async (req, res) => {
   const  userId = req.user.id;
   const {content } = req.body;
   const { postId } = req.params;
-  console.log(userId, postId,content)
   try {
     const comment = await prisma.comment.create({
       data: { postId, authorId: userId, content },
