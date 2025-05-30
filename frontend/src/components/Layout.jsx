@@ -1,12 +1,28 @@
-import {Outlet, useLocation} from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-export default function Layout(){
-    const location = useLocation();
-    const isHomePage = location.pathname === "/";
-    return (
-        <>
-            {!isHomePage && <Navbar />}
-            <Outlet />
-        </>
-    )
+import { useState } from "react";
+export default function Layout() {
+  const [showSidebar, setShowSidebar] = useState(false);
+  const handleOpen = () => {
+    setShowSidebar(true);
+  };
+  const handleClose = () => {
+    setShowSidebar(false);
+  };
+
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+  return (
+    <>
+        {!isHomePage && (
+            <>
+            <Navbar handleOpen={handleOpen} />
+            <Sidebar show={showSidebar} handleClose={handleClose} />
+            </>
+        )}
+      {/* {!isHomePage && <Navbar handleOpen={handleOpen} /> && <Sidebar show={showSidebar} handleClose={handleClose}/>} */}
+      <Outlet />
+    </>
+  );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AuthForm.css";
 import AuthButton from "./AuthButton";
 import axios from "axios";
@@ -6,6 +6,14 @@ import { useNavigate } from "react-router-dom";
 import ToastMessage from "./ToastMessage";
 
 export default function AuthForms() {
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(token){
+      navigate("/feed");
+    }
+  },[]);
+
   const [activeForm, setActiveForm] = useState("login");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -30,7 +38,10 @@ export default function AuthForms() {
         formData
         // {withCredentials: true, headers: { "Content-Type": "application/json" }}
       );
+      console.log(response)
       if (response.status == 200) {
+        const token = response.data.token;
+        localStorage.setItem("token", token)
         navigate("/feed");
       }
       else if (response.status == 404) {
