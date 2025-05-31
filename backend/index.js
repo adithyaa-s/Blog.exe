@@ -6,9 +6,11 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin:'*'
+}));
 app.use("/auth",AuthRouter);
 app.use("/posts",PostRouter);
 app.use("/user",UserRouter);
 
-app.listen(8000, () => { console.log("Server Started !")});
+app.listen(8000, "0.0.0.0", () => { console.log("Server Started !")});

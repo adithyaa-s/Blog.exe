@@ -4,16 +4,11 @@ import AuthButton from "./AuthButton";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ToastMessage from "./ToastMessage";
+import Cookies from "js-cookie"
 
 export default function AuthForms() {
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if(token){
-      navigate("/feed");
-    }
-  },[]);
-
+  
   const [activeForm, setActiveForm] = useState("login");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -25,6 +20,12 @@ export default function AuthForms() {
     header: "",
     content: "",
   });
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if(token){
+      navigate("/feed");
+    }
+  },[]);
   const handleFormData = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -40,7 +41,13 @@ export default function AuthForms() {
       );
       if (response.status == 200) {
         const token = response.data.token;
-        localStorage.setItem("token", token)
+        var oneHour = 1/24;
+        Cookies.set('token',token,{
+          expires: oneHour,
+          // secure: true,
+          sameSite: 'strict',
+          // httpsOnly:true
+        });
         navigate("/feed");
       }
       else if (response.status == 404) {

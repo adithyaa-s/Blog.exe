@@ -4,10 +4,13 @@ import {React, useState, useEffect} from "react"
 import PostCard from "./PostCard";
 import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function FeedPage() {
+    console.log("Feedpage")
     const [showSidebar, setShowSidebar] = useState(false);
     const [posts,setPosts] = useState([]);
+    const navigate = useNavigate();
     // const handleOpen = () => {setShowSidebar(true)};
     const handleClose = () => {setShowSidebar(false)};
     
@@ -22,6 +25,10 @@ export default function FeedPage() {
                     },
                 }
             );
+            if(response.status == 403){
+                navigate("/");
+            }
+            console.log(response)
            setPosts(response.data || []);
         }catch(error){
         console.log("Error in Fetching Posts", error);
@@ -40,7 +47,8 @@ export default function FeedPage() {
                         <div>
                             {posts.length>0 ? (
                                 posts.map((post,index)=>(
-                                    <PostCard key={index} heading={post.heading} content={post.content} username={post.author.username} imageUrl={post.imageUrl} likes={post.likes.length} />
+                                    // const postObject = {}
+                                    <PostCard key={index} postObject={post} />
                                 ))
                             ):<p className="justify-content-center">No Posts :{`(`}</p>}
                         </div>
