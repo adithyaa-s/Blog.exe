@@ -74,7 +74,8 @@ router.get("/getPosts",authenticateToken, async (req, res) => {
 router.post("/:postId/like", authenticateToken, async (req, res) => {
   try {
     const userId = req.user.id;
-    const postId = parseInt(req.params.postId, 10);
+    console.log(req.params.postId)
+    const postId = req.params.postId;
     console.log(userId, postId)
     await prisma.like.create({
       data: { postId, userId },
@@ -88,7 +89,7 @@ router.post("/:postId/like", authenticateToken, async (req, res) => {
 router.post("/:postId/comment",authenticateToken, async (req, res) => {
   const  userId = req.user.id;
   const {content } = req.body;
-  const postId = parseInt(req.params.postId, 10);
+  const postId = req.params.postId;
   try {
     const comment = await prisma.comment.create({
       data: { postId, authorId: userId, content },
@@ -100,7 +101,7 @@ router.post("/:postId/comment",authenticateToken, async (req, res) => {
 });
 
 router.delete('/:postId', authenticateToken, async (req, res) => {
-    const postId = parseInt(req.params.postId, 10);
+    const postId = req.params.postId;
     const userId = req.user.id;
     const post = await prisma.post.findUnique({ where: { id: postId } });
   
@@ -115,7 +116,7 @@ router.delete('/:postId', authenticateToken, async (req, res) => {
 router.delete("/:postId/like", authenticateToken, async (req, res) => {
   try {
     const userId = req.user.id;
-    const postId = parseInt(req.params.postId, 10);
+    const postId = req.params.postId;
     await prisma.like.deleteMany({
       where: {
         postId,
