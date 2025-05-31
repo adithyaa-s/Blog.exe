@@ -1,11 +1,12 @@
 import {React} from "react";
 import { Offcanvas } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function Sidebar({show, handleClose}){
     const navigate = useNavigate();
     const handleLogout = () =>{
-        localStorage.removeItem("token");
+        Cookies.remove("token");
         navigate("/");
     }
     return (

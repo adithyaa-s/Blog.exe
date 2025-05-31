@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./AuthForm.css";
 import AuthButton from "./AuthButton";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 import ToastMessage from "./ToastMessage";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function AuthForms() {
-
-  
   const [activeForm, setActiveForm] = useState("login");
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,12 +19,27 @@ export default function AuthForms() {
     header: "",
     content: "",
   });
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const token = Cookies.get("token");
-    if(token){
+    if (token) {
       navigate("/feed");
+    } else {
+      setCheckingAuth(false);
     }
-  },[]);
+  }, [navigate]);
+
+  if (checkingAuth) {
+    return (
+      <div className="container mt-5">
+        <Skeleton height={50} width={300} />
+        <Skeleton height={20} count={5} style={{ marginTop: 10 }} />
+      </div>
+    );
+  }
+ 
   const handleFormData = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -48,7 +62,9 @@ export default function AuthForms() {
           sameSite: 'strict',
           // httpsOnly:true
         });
-        navigate("/feed");
+        setTimeout(()=>{
+        navigate("/feed", {replace:true});
+        },100);
       }
       else if (response.status == 404) {
         toastObject.header = "Error";

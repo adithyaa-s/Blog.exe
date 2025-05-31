@@ -1,9 +1,17 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 export default function Layout() {
   const [showSidebar, setShowSidebar] = useState(false);
+  
+  const location = useLocation();
+
+  useEffect(() => {
+    setShowSidebar(false);
+  }, [location]);
+
   const handleOpen = () => {
     setShowSidebar(true);
   };
@@ -11,7 +19,6 @@ export default function Layout() {
     setShowSidebar(false);
   };
 
-  const location = useLocation();
   const isHomePage = location.pathname === "/";
   return (
     <>
