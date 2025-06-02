@@ -25,7 +25,7 @@ router.post("/signup", async (req,res) =>{
                 data: {
                     username: username,
                     email: email,
-                    name: name,
+                    name: name || "Test",
                     password: await hashPassword(password)
                 }
             });

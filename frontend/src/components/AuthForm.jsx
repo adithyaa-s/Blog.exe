@@ -39,7 +39,7 @@ export default function AuthForms() {
       </div>
     );
   }
- 
+
   const handleFormData = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -53,30 +53,28 @@ export default function AuthForms() {
         formData
         // {withCredentials: true, headers: { "Content-Type": "application/json" }}
       );
+      console.log(response.status)
       if (response.status == 200) {
         const token = response.data.token;
-        var oneHour = 1/24;
-        Cookies.set('token',token,{
+        var oneHour = 1 / 24;
+        Cookies.set("token", token, {
           expires: oneHour,
           // secure: true,
-          sameSite: 'strict',
+          sameSite: "strict",
           // httpsOnly:true
         });
-        setTimeout(()=>{
-        navigate("/feed", {replace:true});
-        },100);
+        setTimeout(() => {
+          navigate("/feed", { replace: true });
+        }, 100);
       }
-      else if (response.status == 404) {
-        toastObject.header = "Error";
-        toastObject.content = "User Not Found";
+      else if(response.status == 201){
+        setToastObject({header: "User Successfully Created", content: "Please Login to Continue"})
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         setToastObject({ header: "Error", content: "Invalid Credentials" });
-        
       } else if (axios.isAxiosError(error) && error.response?.status === 404) {
         setToastObject({ header: "Error", content: "User Not Found" });
-       
       } else {
         console.log(error);
       }
@@ -164,15 +162,15 @@ export default function AuthForms() {
               </legend>
               <div className="input-block">
                 <label htmlFor="signup-username">Username</label>
-                <input id="signup-username" type="text" required />
+                <input id="signup-username" type="text" name="username" value={formData.username} onChange={((e)=>{handleFormData(e)})} required />
               </div>
               <div className="input-block">
                 <label htmlFor="signup-email">E-mail</label>
-                <input id="signup-email" type="email" required />
+                <input id="signup-email" type="email" name = "email" value={formData.email} onChange={((e)=>{handleFormData(e)})} required />
               </div>
               <div className="input-block">
                 <label htmlFor="signup-password">Password</label>
-                <input id="signup-password" type="password" required />
+                <input id="signup-password" type="password" name="password" value={formData.password} onChange={((e)=>{handleFormData(e)})} required />
               </div>
             </fieldset>
             {activeForm === "signup" && (
@@ -180,9 +178,7 @@ export default function AuthForms() {
                 <AuthButton
                   className="btn-signup"
                   buttonValue={"Sign Up"}
-                  onClick={() => {
-                    handleSubmit("signup");
-                  }}
+                  handleSubmit={handleSubmit}
                 />
               </div>
             )}

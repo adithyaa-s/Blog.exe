@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 
 function AuthButton({buttonValue,handleSubmit}) {
   const [isLoading, setLoading] = useState(false);
-
+  console.log(buttonValue)
   useEffect(() => {
     function simulateNetworkRequest() {
       return new Promise(resolve => {
@@ -18,7 +18,7 @@ function AuthButton({buttonValue,handleSubmit}) {
     }
   }, [isLoading]);
 
-  const handleClick = () =>{ buttonValue = "Login" ? handleSubmit("signin") : handleSubmit("signup"); setLoading(true);}
+  const handleClick = () =>{ buttonValue == "Login" ? handleSubmit("signin") : handleSubmit("signup"); setLoading(true);}
 
   return (
     <div className='d-flex justify-content-center'>

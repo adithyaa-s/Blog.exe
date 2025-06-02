@@ -49,10 +49,10 @@ export default function FeedPage() {
 
     const PostSkeleton = () => (
         <div className="mb-4">
-            <Skeleton height={50} />
-            <Skeleton height={300} />
-            <Skeleton height={100} />
-            <Skeleton height={40} width={200} />
+            {/* <Skeleton height={50} /> */}
+            <Skeleton height={500} />
+            {/* <Skeleton height={100} /> */}
+            {/* <Skeleton height={40} width={200} /> */}
         </div>
     );
 
