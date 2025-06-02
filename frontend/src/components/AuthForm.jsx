@@ -9,18 +9,31 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function AuthForms() {
+  const [inputType, setInputType] = useState("");
   const [activeForm, setActiveForm] = useState("login");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     name: "",
+    username: "",
+    loginInput: "",
   });
+
   const [toastObject, setToastObject] = useState({
     header: "",
     content: "",
   });
   const [checkingAuth, setCheckingAuth] = useState(true);
   const navigate = useNavigate();
+
+  const validateAuthInput = (input) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(input)) {
+      setInputType("email");
+    } else {
+      setInputType("username");
+    }
+  };
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -48,27 +61,40 @@ export default function AuthForms() {
   };
   const handleSubmit = async (val) => {
     try {
+      let payload = {};
+
+      if (val === "signin") {
+        payload = {
+          password: formData.password,
+          [inputType]: formData.loginInput,
+        };
+      } else {
+        payload = {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        };
+      }
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_API}/auth/${val}`,
-        formData
-        // {withCredentials: true, headers: { "Content-Type": "application/json" }}
+        payload
       );
-      console.log(response.status)
-      if (response.status == 200) {
+
+      if (response.status === 200) {
         const token = response.data.token;
         var oneHour = 1 / 24;
         Cookies.set("token", token, {
           expires: oneHour,
-          // secure: true,
           sameSite: "strict",
-          // httpsOnly:true
         });
         setTimeout(() => {
           navigate("/feed", { replace: true });
         }, 100);
-      }
-      else if(response.status == 201){
-        setToastObject({header: "User Successfully Created", content: "Please Login to Continue"})
+      } else if (response.status === 201) {
+        setToastObject({
+          header: "User Successfully Created",
+          content: "Please Login to Continue",
+        });
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -80,6 +106,7 @@ export default function AuthForms() {
       }
     }
   };
+
   return (
     <section className="forms-section">
       <h1 className="section-title">Welcome Back</h1>
@@ -103,14 +130,15 @@ export default function AuthForms() {
             <fieldset>
               <legend>Please, enter your email and password for login.</legend>
               <div className="input-block">
-                <label htmlFor="login-email">E-mail</label>
+                <label htmlFor="login-email">Username or E-mail</label>
                 <input
-                  id="login-email"
-                  type="email"
-                  name="email"
-                  value={formData.email}
+                  id="login-input"
+                  type="text"
+                  name="loginInput"
+                  value={formData.loginInput}
                   onChange={(e) => {
                     handleFormData(e);
+                    validateAuthInput(e.target.value);
                   }}
                   required
                 />
@@ -162,15 +190,42 @@ export default function AuthForms() {
               </legend>
               <div className="input-block">
                 <label htmlFor="signup-username">Username</label>
-                <input id="signup-username" type="text" name="username" value={formData.username} onChange={((e)=>{handleFormData(e)})} required />
+                <input
+                  id="signup-username"
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={(e) => {
+                    handleFormData(e);
+                  }}
+                  required
+                />
               </div>
               <div className="input-block">
                 <label htmlFor="signup-email">E-mail</label>
-                <input id="signup-email" type="email" name = "email" value={formData.email} onChange={((e)=>{handleFormData(e)})} required />
+                <input
+                  id="signup-email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={(e) => {
+                    handleFormData(e);
+                  }}
+                  required
+                />
               </div>
               <div className="input-block">
                 <label htmlFor="signup-password">Password</label>
-                <input id="signup-password" type="password" name="password" value={formData.password} onChange={((e)=>{handleFormData(e)})} required />
+                <input
+                  id="signup-password"
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={(e) => {
+                    handleFormData(e);
+                  }}
+                  required
+                />
               </div>
             </fieldset>
             {activeForm === "signup" && (

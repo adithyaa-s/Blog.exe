@@ -48,7 +48,6 @@ router.get("/getPosts",authenticateToken, async (req, res) => {
   try {
     const token = req.user;
     const userId = token.id;
-    console.log(userId)
     const posts = await prisma.post.findMany({
       include: {
         author: { select: { username: true, name: true } },
@@ -74,9 +73,7 @@ router.get("/getPosts",authenticateToken, async (req, res) => {
 router.post("/:postId/like", authenticateToken, async (req, res) => {
   try {
     const userId = req.user.id;
-    console.log(req.params.postId)
     const postId = req.params.postId;
-    console.log(userId, postId)
     await prisma.like.create({
       data: { postId, userId },
     });

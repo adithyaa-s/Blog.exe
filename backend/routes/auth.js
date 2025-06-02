@@ -39,11 +39,13 @@ router.post("/signup", async (req,res) =>{
 
 router.post("/signin", async (req,res) =>{
     try{
-        const {email, password} = req.body;
-        const user = await prisma.user.findUnique({
+        const {email, username, password} = req.body;
+        const user = await prisma.user.findFirst({
             where:{
-                // username: username
-                email: email
+                OR:[
+                    {email:email},
+                    {username:username}
+                ]
             }
         });
         if(!user){
