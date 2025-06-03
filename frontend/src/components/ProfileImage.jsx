@@ -186,10 +186,9 @@ import React from "react";
 import "./ProfileImage.css";
 
 const ProfileImage = ({ profileImageUrl }) => {
-  console.log(profileImageUrl)
   return (
-    <div className="card">
-      <div className="img-wrap">
+    <div className="profile-card">
+      <div className="profile-img-wrap">
         <img 
           src={profileImageUrl || 'https://res.cloudinary.com/dg9hyvdtr/image/upload/v1748928051/goks/profile/qmltiauheoicsoj1az8a.png'} 
           alt="Profile" 
