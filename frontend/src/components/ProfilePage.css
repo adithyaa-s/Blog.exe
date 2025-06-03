@@ -1,0 +1,98 @@
+.profile-page {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.top-section {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+}
+
+.profile-image-wrapper {
+    width: 100%;
+    max-width: 300px;  /* Default size for mobile */
+    aspect-ratio: 1;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.cd-player-wrapper {
+    width: 100%;
+    max-width: 300px;  /* Default size for mobile */
+    aspect-ratio: 1;
+}
+
+/* Large screens (lg) */
+@media (min-width: 992px) {
+    .profile-image-wrapper,
+    .cd-player-wrapper {
+        max-width: 200px;  /* Fixed size for large screens */
+    }
+}
+
+/* Medium screens (md) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .profile-image-wrapper,
+    .cd-player-wrapper {
+        max-width: 180px;  /* Fixed size for medium screens */
+    }
+}
+
+/* Small screens (sm) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .profile-image-wrapper,
+    .cd-player-wrapper {
+        max-width: 150px;  /* Fixed size for small screens */
+    }
+}
+
+/* Extra small screens (xs) */
+@media (max-width: 575px) {
+    .profile-image-wrapper,
+    .cd-player-wrapper {
+        max-width: 120px;  /* Fixed size for extra small screens */
+    }
+}
+
+.profile-username {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.profile-stats {
+    margin: 1rem 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    color: #6c757d;
+    margin: 0;
+}
+
+.profile-bio {
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .top-section {
+        height: 35vh;
+    }
+} 
