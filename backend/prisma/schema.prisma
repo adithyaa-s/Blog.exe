@@ -15,16 +15,17 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  name      String
-  username  String    @unique
-  email     String    @unique
-  password  String
-  posts     Post[]
-  comments  Comment[]
-  likes     Like[]
-  following Follows[] @relation("following")
-  followers Follows[] @relation("followers")
+  id              String    @id @default(uuid())
+  name            String
+  username        String    @unique
+  email           String    @unique
+  password        String
+  profileImageUrl String   @default("https://res.cloudinary.com/dg9hyvdtr/image/upload/v1748581846/adithyaa/posts/q8tvxyrb82mqzkc1gm9d.gif")
+  posts           Post[]
+  comments        Comment[]
+  likes           Like[]
+  following       Follows[] @relation("following")
+  followers       Follows[] @relation("followers")
 }
 
 model Post {

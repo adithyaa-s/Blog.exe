@@ -11,6 +11,34 @@ router.use((req, res, next) => {
   next();
 });
 
+router.post("/uploadProfileImage", authenticateToken, upload.single("image"), async (req, res) => {
+  try {
+    console.log("Uploading profile image...");
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          resource_type: "auto",
+          folder: `${req.user.username}/profile`,
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+      stream.end(req.file.buffer);
+    });
+
+    await prisma.user.update({
+      where: { id: req.user.id },
+      data: { profileImageUrl: result.secure_url }
+    });
+
+    res.status(200).json({ imageUrl: result.secure_url });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+});
+
 router.post("/createPost", authenticateToken, upload.single("image"), async (req, res) => {
   const userId = req.user.id;
   const { heading, content } = req.body;

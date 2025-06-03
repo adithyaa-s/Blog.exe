@@ -18,6 +18,8 @@ router.get("/:id", async (req,res) =>{
             },
             include: {
                 posts: true,
+                followers: true,
+                following: true
               }
         });
         if(!user){
@@ -27,8 +29,11 @@ router.get("/:id", async (req,res) =>{
             username: user.username,
             name: user.name,
             posts: user.posts,
+            profileImageUrl: user.profileImageUrl,
+            followers: user.followers,
+            following: user.following
           };
-        return res.status(200).json(userDetails);
+        return res.status(200).json({userDetails});
     }catch(error){
         return res.status(500).json({"error":"Error Occured"});
     }

@@ -57,7 +57,8 @@ router.post("/signin", async (req,res) =>{
             id: user.id,
             name: user.name,
             username: user.username,
-            email: user.email
+            email: user.email,
+            profileImageUrl: user.profileImageUrl
             }
         const token = await generateAccessToken(tokenData);
         res.cookie("token",token);
