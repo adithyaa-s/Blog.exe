@@ -29,7 +29,7 @@
     z-index: 9998;
     background: rgba(0, 0, 0, 0.2);
   }
-  
+
   .toast-close-btn {
     margin-top: 1rem;
     background: #f44336;
@@ -68,3 +68,4 @@
     }
   }
   
+ 

@@ -75,7 +75,9 @@ export default function FeedPage() {
                                     <PostCard key={post.id || index} postObject={post} />
                                 ))
                             ) : (
-                                <p className="text-center">No Posts :(</p>
+                                <div className="d-flex justify-content-center align-items-center">
+                                    <p className="text-center">No Posts :(</p>
+                                </div>
                             )}
                         </div>
                     </Col>
