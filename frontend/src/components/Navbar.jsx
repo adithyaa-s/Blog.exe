@@ -28,7 +28,7 @@ export default function Navbar({ handleOpen }) {
   }, [navigate]);
 
   return (
-    <div>
+    <div style={{position:"sticky", top:"0", zIndex:"1000", backgroundColor:"white"}}>
       <div className="container-fluid py-3 border">
         <div className="row align-items-center">
           <div className="col-4 text-start">

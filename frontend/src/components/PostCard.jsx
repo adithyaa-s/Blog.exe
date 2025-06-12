@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 
 export default function PostCard({ postObject }) {
   const { id, heading, author, content, imageUrl, likes } = postObject;
-  console.log(id, heading, author, content, imageUrl, likes);
+  // console.log(id, heading, author, content, imageUrl, likes);
   const [like, setLike] = useState(postObject.likedByCurrentUser);
   const [likeCount, setLikeCount] = useState(parseInt(likes.length));
 

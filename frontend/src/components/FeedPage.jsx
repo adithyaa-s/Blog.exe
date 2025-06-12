@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Cookies from "js-cookie";
+import AISidebar from "./AISidebar";
 
 
 export default function FeedPage() {
@@ -81,7 +82,9 @@ export default function FeedPage() {
                             )}
                         </div>
                     </Col>
-                    <Col lg={3} className="side-feed"></Col>
+                    <Col lg={3} className="side-feed">
+                            <AISidebar />
+                    </Col>
                 </Row>    
             </Container>  
         </div>
