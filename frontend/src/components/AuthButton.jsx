@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
-function AuthButton({buttonValue,handleSubmit}) {
+function AuthButton({buttonValue, handleSubmit}) {
   const [isLoading, setLoading] = useState(false);
-  console.log(buttonValue)
+  
   useEffect(() => {
     function simulateNetworkRequest() {
       return new Promise(resolve => {
@@ -18,18 +18,24 @@ function AuthButton({buttonValue,handleSubmit}) {
     }
   }, [isLoading]);
 
-  const handleClick = () =>{ buttonValue == "Login" ? handleSubmit("signin") : handleSubmit("signup"); setLoading(true);}
+  const handleClick = () => {
+    if (buttonValue === "Login") {
+      handleSubmit("signin");
+    } else {
+      handleSubmit("signup");
+    }
+    setLoading(true);
+  };
 
   return (
     <div className='d-flex justify-content-center'>
-    <Button
-      variant="primary"
-      disabled={isLoading}
-      onClick={!isLoading ? handleClick : null}
-      // style={{position:"absolute", top:"50%", left:"50%"}}
-    >
-      {isLoading ? 'Loading…' : buttonValue}
-    </Button>
+      <Button
+        variant="primary"
+        disabled={isLoading}
+        onClick={!isLoading ? handleClick : null}
+      >
+        {isLoading ? 'Loading…' : buttonValue}
+      </Button>
     </div>
   );
 }

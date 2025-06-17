@@ -1,12 +1,64 @@
-.landingPage{
-    /* background-image: url("/fbmx.png"); */
+/* Landing Page */
+.landingPage {
     width: 100%;
     min-height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.landingPage h1{
-    color: rgb(0, 0, 0);
-}
+  }
+  
+  .landingPage h1 {
+    color: #000;
+  }
+  
+  /* Sidebar (Offcanvas) Styles */
+  
+  /* Desktop Sidebar */
+  .sidebar-desktop .offcanvas {
+    width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+  }
+  
+  /* Mobile Sidebar */
+  .sidebar-mobile .offcanvas {
+    width: 100vw;
+    height: 100vh;
+    padding: 1rem;
+  }
+  
+  /* Scrollable body for sidebar */
+  .sidebar-desktop .offcanvas-body,
+  .sidebar-mobile .offcanvas-body {
+    overflow-y: auto;
+  }
+  
+  /* AI Sidebar (Card) */
+  .ai-sidebar {
+    width: 100%;
+    height: 80%;
+    max-height: 80vh;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+  }
+  
+  /* Desktop AI Sidebar */
+  @media (min-width: 768px) {
+    .ai-sidebar {
+      width: 63vh;
+      height: 75vh;
+      position: fixed;
+    }
+  }
+  
+  /* Reply content scroll area */
+  .ai-reply-box {
+    overflow-y: auto;
+    max-height: 40vh;
+    text-align: center;
+    padding: 0.5rem;
+  }
+  

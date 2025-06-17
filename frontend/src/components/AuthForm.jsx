@@ -60,6 +60,10 @@ export default function AuthForms() {
     }));
   };
   const handleSubmit = async (val) => {
+    console.log("handleSubmit called with:", val);
+    console.log("formData:", formData);
+    console.log("inputType:", inputType);
+    
     try {
       let payload = {};
 
@@ -75,10 +79,16 @@ export default function AuthForms() {
           password: formData.password,
         };
       }
+      
+      console.log("Sending payload:", payload);
+      console.log("API URL:", `${import.meta.env.VITE_BACKEND_API}/auth/${val}`);
+      
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_API}/auth/${val}`,
         payload
       );
+
+      console.log("Response received:", response);
 
       if (response.status === 200) {
         const token = response.data.token;
@@ -97,12 +107,14 @@ export default function AuthForms() {
         });
       }
     } catch (error) {
+      console.error("Login error:", error);
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         setToastObject({ header: "Error", content: "Invalid Credentials" });
       } else if (axios.isAxiosError(error) && error.response?.status === 404) {
         setToastObject({ header: "Error", content: "User Not Found" });
       } else {
         console.log(error);
+        setToastObject({ header: "Error", content: "Login failed. Please try again." });
       }
     }
   };
