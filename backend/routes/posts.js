@@ -72,11 +72,24 @@ router.post("/createPost", authenticateToken, upload.single("image"), async (req
   }
 });
 
-router.get("/getPosts",authenticateToken, async (req, res) => {
+router.get("/getPosts", authenticateToken, async (req, res) => {
   try {
     const token = req.user;
     const userId = token.id;
+
+    // Get page and limit from query (default: page 1, limit 5)
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+
+    const skip = (page - 1) * limit;
+
+    // Get total count of posts
+    const total = await prisma.post.count();
+
+    // Fetch paginated posts
     const posts = await prisma.post.findMany({
+      skip,
+      take: limit,
       include: {
         author: { select: { username: true, name: true } },
         comments: true,
@@ -88,11 +101,16 @@ router.get("/getPosts",authenticateToken, async (req, res) => {
       },
       orderBy: { id: "desc" },
     });
+
     const modifiedPosts = posts.map(post => ({
       ...post,
       likedByCurrentUser: post.likes.some(like => like.userId === userId)
     }));
-    return res.json(modifiedPosts);
+
+    return res.json({
+      posts: modifiedPosts,
+      total,
+    });
   } catch (err) {
     return res.status(500).json({ Message: err.message });
   }
