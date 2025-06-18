@@ -9,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function AuthForms() {
+  console.log(import.meta.env.VITE_BACKEND_API);
   const [inputType, setInputType] = useState("");
   const [activeForm, setActiveForm] = useState("login");
   const [formData, setFormData] = useState({

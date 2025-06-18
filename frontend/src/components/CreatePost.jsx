@@ -9,7 +9,6 @@ import ToastMessage from "./ToastMessage";
 
 function MyVerticallyCenteredModal(props) {
   const navigate = useNavigate();
-  const { showToast, setShowToast } = props;
   const [formData, setFormData] = useState({
     heading: "",
     content: "",
@@ -54,7 +53,7 @@ function MyVerticallyCenteredModal(props) {
         }
       );
       props.onHide();
-      setShowToast(true);
+      props.onPostSuccess();
     } catch (error) {
       console.error(
         "Post creation failed:",
@@ -62,15 +61,6 @@ function MyVerticallyCenteredModal(props) {
       );
     }
   };
-
-  useEffect(() => {
-    if (showToast) {
-      const timer = setTimeout(() => {
-        setShowToast(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [showToast]);
 
   return (
     <>
@@ -126,6 +116,11 @@ function MyVerticallyCenteredModal(props) {
 export default function App() {
   const [modalShow, setModalShow] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  
+  const handlePostSuccess = () => {
+    setShowToast(true);
+  };
+
   return (
     <>
       <p
@@ -138,9 +133,8 @@ export default function App() {
 
       <MyVerticallyCenteredModal
         show={modalShow}
-        showToast={showToast}
-        setShowToast={setShowToast}
         onHide={() => setModalShow(false)}
+        onPostSuccess={handlePostSuccess}
       />
       {showToast && (
         <ToastMessage

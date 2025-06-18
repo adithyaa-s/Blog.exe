@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import '../config/env.js'; // This loads the root .env file
 
 const SECRET_TOKEN = process.env.SECRET_TOKEN;
 

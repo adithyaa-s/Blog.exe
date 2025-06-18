@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  name            String
+  username        String    @unique
+  email           String    @unique
+  password        String
+  profileImageUrl String    @default("https://res.cloudinary.com/dg9hyvdtr/image/upload/v1748581846/adithyaa/posts/q8tvxyrb82mqzkc1gm9d.gif")
+  posts           Post[]
+  comments        Comment[]
+  likes           Like[]
+  following       Follows[] @relation("following")
+  followers       Follows[] @relation("followers")
+}
+
+model Post {
+  id       String    @id @default(uuid())
+  heading  String
+  content  String
+  authorId String
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  imageUrl String
+  likes    Like[]
+  comments Comment[]
+}
+
+model Comment {
+  id      String @id @default(uuid())
+  content String
+  postId  String
+  userId  String
+  Post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  User    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id     String @id @default(uuid())
+  postId String
+  userId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+}
+
+model Follows {
+  id          String @id @default(uuid())
+  followerId  String
+  followingId String
+  follower    User   @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+}
