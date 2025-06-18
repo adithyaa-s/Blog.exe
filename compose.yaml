@@ -1,0 +1,39 @@
+services:
+  web:
+    depends_on:
+    - api
+    build: ./frontend
+    ports:
+    - "5173:5173"
+    environment:
+      VITE_BACKEND_API: ${VITE_BACKEND_API}
+      VITE_AI_API: ${VITE_AI_API}
+    develop:
+      watch:
+      - path: ./frontend/package.json
+        action: rebuild
+      - path: ./frontend/package-lock.json
+        action: rebuild
+      - path: ./frontend
+        target: /app
+        action: sync
+  api:
+    build: ./backend
+    ports:
+    - "8000:8000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      SECRET_TOKEN: ${SECRET_TOKEN}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+    develop:
+      watch:
+      - path: ./backend/package.json
+        action: rebuild
+      - path: ./backend/package-lock.json
+        action: rebuild
+      - path: ./backend
+        target: /app
+        action: sync
+      
