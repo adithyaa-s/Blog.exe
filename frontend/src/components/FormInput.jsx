@@ -5,12 +5,10 @@ import { useState } from "react";
 
 export default function FormInput({ handleReply, input, setInput }) {
     const handleSubmit = () => {
-        console.log("FormInput: Submit clicked with input:", input);
         if (input.trim()) {
             handleReply(input);
             setTimeout(()=>{setInput("")},2000); // Clear input after submission
         } else {
-            console.log("No input to submit");
         }
     };
 

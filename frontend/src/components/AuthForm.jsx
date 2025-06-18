@@ -9,7 +9,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function AuthForms() {
-  console.log(import.meta.env.VITE_BACKEND_API);
   const [inputType, setInputType] = useState("");
   const [activeForm, setActiveForm] = useState("login");
   const [formData, setFormData] = useState({
@@ -61,9 +60,6 @@ export default function AuthForms() {
     }));
   };
   const handleSubmit = async (val) => {
-    console.log("handleSubmit called with:", val);
-    console.log("formData:", formData);
-    console.log("inputType:", inputType);
     
     try {
       let payload = {};
@@ -81,15 +77,12 @@ export default function AuthForms() {
         };
       }
       
-      console.log("Sending payload:", payload);
-      console.log("API URL:", `${import.meta.env.VITE_BACKEND_API}/auth/${val}`);
       
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_API}/auth/${val}`,
         payload
       );
 
-      console.log("Response received:", response);
 
       if (response.status === 200) {
         const token = response.data.token;

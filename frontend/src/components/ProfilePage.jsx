@@ -21,7 +21,6 @@ export default function ProfilePage() {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_API}/user/${id}`
         );
-        console.log(response.data.userDetails)
         setUser(response.data.userDetails);
       } catch (error) {
         console.log(error)
