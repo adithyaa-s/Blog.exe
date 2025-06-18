@@ -1,3 +1,4 @@
+import './config/env.js'; // This loads the root .env file
 import express from "express";
 import { AuthRouter } from "./routes/auth.js";
 import {PostRouter} from "./routes/posts.js"

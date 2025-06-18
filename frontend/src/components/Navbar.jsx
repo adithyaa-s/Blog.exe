@@ -13,7 +13,6 @@ export default function Navbar({ handleOpen }) {
       if (token) {
         try {
           const userObject = jwtDecode(token);
-          console.log("User", userObject);
           setUser(userObject.username);
         } catch (err) {
           console.error("Invalid token");

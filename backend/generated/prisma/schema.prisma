@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
   binaryTargets = ["native", "rhel-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
@@ -21,7 +21,7 @@ model User {
   username        String    @unique
   email           String    @unique
   password        String
-  profileImageUrl String   @default("https://res.cloudinary.com/dg9hyvdtr/image/upload/v1748581846/adithyaa/posts/q8tvxyrb82mqzkc1gm9d.gif")
+  profileImageUrl String    @default("https://res.cloudinary.com/dg9hyvdtr/image/upload/v1748581846/adithyaa/posts/q8tvxyrb82mqzkc1gm9d.gif")
   posts           Post[]
   comments        Comment[]
   likes           Like[]

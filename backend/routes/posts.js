@@ -42,8 +42,12 @@ router.post("/uploadProfileImage", authenticateToken, upload.single("image"), as
 router.post("/createPost", authenticateToken, upload.single("image"), async (req, res) => {
   const userId = req.user.id;
   const { heading, content } = req.body;
+  
   try {
-    const result = await prisma.$transaction(async (tx) => {
+    let imageUrl = null;
+    
+    // Upload image to Cloudinary if provided
+    if (req.file) {
       const cloudinaryResult = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           {
@@ -57,17 +61,22 @@ router.post("/createPost", authenticateToken, upload.single("image"), async (req
         );
         stream.end(req.file.buffer);
       });
-      const post = await tx.post.create({
-        data: {
-          heading,
-          content,
-          authorId: userId,
-          imageUrl: cloudinaryResult.secure_url,
-        },
-      });
-      res.status(200).json({ Message: "Successfuly Posted" });
+      imageUrl = cloudinaryResult.secure_url;
+    }
+
+    // Create post in database
+    const post = await prisma.post.create({
+      data: {
+        heading,
+        content,
+        authorId: userId,
+        imageUrl: imageUrl,
+      },
     });
+
+    res.status(200).json({ Message: "Successfully Posted", post });
   } catch (error) {
+    console.error("Error creating post:", error);
     res.status(500).json({ msg: error.message });
   }
 });
